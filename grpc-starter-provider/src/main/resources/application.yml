@@ -1,0 +1,50 @@
+# Spring boot application
+spring:
+  application:
+    name: grpc
+  datasource:
+      # root
+    url: jdbc:mysql://localhost:3306/account?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+      # 使用druid数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+seata:
+  config:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+    type: nacos
+  registry:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+    type: nacos
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+
+grpc:
+  server:
+    port: 9091
+  client:
+    GLOBAL:
+      negotiation-type: plaintext
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 30
+    default-fetch-size: 100
+  mapper-locations: classpath*:mapper/*Mapper.xml
+server:
+  port: 8088
